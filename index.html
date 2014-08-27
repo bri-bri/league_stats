@@ -12,8 +12,7 @@ var wins = null;
 // Ajax settings MINUS url; settings['url'] must be set before invoking $.ajax(settings)
 var settings = {
     success: function(raw, status, xhr){
-        // Hack to replace any characters trailing last }  -- no idea why "true" is being added but this workaround removes it to give valid json.
-        var data = JSON.parse(raw.replace(/\}[^\}]+$/, '}'));
+        var data = JSON.parse(raw);
         console.log(data);
         
         // Win/loss data is BOOL nested in data.games.games[index].participants[0].stats.win
