@@ -1,0 +1,46 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<input id="player_input" type="text" placeholder="player id" value="31685852"/><button type="button" onclick="loadResponse(); return false;">Load</button>
+
+<div id="test"></div>
+
+<script type="text/javascript">
+
+var obj = null;
+var wins = null;
+
+// Ajax settings MINUS url; settings['url'] must be set before invoking $.ajax(settings)
+var settings = {
+    success: function(raw, status, xhr){
+        var data = JSON.parse(raw.replace(/\}[^\}]+$/, '}'));
+        console.log(data);
+        
+        // Win/loss data is BOOL nested in data.games.games[index].participants[0].stats.win
+        // Queried player id is always index 0
+        var winLossRecord = data.games.games.map(function(game){ return game.participants[0].stats.win;});
+        var wins = 0;
+        var losses = 0;
+        
+        // player name is located at data.games.games[0].participantIdentities[0].player.summonerName
+        var playerName = data.games.games[0].participantIdentities[0].player.summonerName;
+        $.each(winLossRecord, function(index, value){
+            if(value){
+                wins++;
+            } else {
+                losses++;
+            }
+        });
+        $('#test').html("<h3>Record for " + playerName + " over last 20 games</h3><hr><b>Wins:</b> " + wins + "<br/>" + "<b>Losses:</b> " + losses);
+        obj = data;
+    }  
+};
+
+var loadResponse = function(){
+    settings['url'] = "http://www.therealbrianhansen.com/lol/process.php?player_id="+ $('#player_input').val();
+    $.ajax(settings);
+};
+
+$(document).ready(function(){
+    loadResponse();
+});
+</script>
