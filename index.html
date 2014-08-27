@@ -12,6 +12,7 @@ var wins = null;
 // Ajax settings MINUS url; settings['url'] must be set before invoking $.ajax(settings)
 var settings = {
     success: function(raw, status, xhr){
+        // Hack to replace any characters trailing last }  -- no idea why "true" is being added but this workaround removes it to give valid json.
         var data = JSON.parse(raw.replace(/\}[^\}]+$/, '}'));
         console.log(data);
         
