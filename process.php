@@ -11,4 +11,4 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 // Simulate a RESTful response
-echo json_encode($result);
+return $result;
