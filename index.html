@@ -36,7 +36,7 @@ var settings = {
 };
 
 var loadResponse = function(){
-    settings['url'] = "http://www.therealbrianhansen.com/lol/process.php?player_id="+ $('#player_input').val();
+    settings['url'] = "process.php?player_id="+ $('#player_input').val();
     $.ajax(settings);
 };
 
